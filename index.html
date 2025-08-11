@@ -1,32 +1,1640 @@
 <html class="scroll-smooth" lang="pt-BR">
-<head>
+ <head>
   <meta charset="utf-8"/>
-  <meta content="width=device-width,initial-scale=1"name="viewport"/>
+  <meta content="width=device-width, initial-scale=1" name="viewport"/>
   <title>
-    Givara - Boutique de perfumes sofisticados
-  <title/>
-    <script scr="https://cdn.tailwindscss.com">
-      <script/>
-        <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative&amp;family=EB=Garamond&amp;display=swap" rel="stylesheet"/>
-        <link href="https://cdnjs.cloundflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+   Givara - Boutique de Perfumes Sofisticados
+  </title>
+  <script src="https://cdn.tailwindcss.com">
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative&amp;family=EB+Garamond&amp;display=swap" rel="stylesheet"/>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+  <style>
+   body {
+      font-family: 'EB Garamond', serif;
+      background-color: #fff;
+      color: #3b3054; /* deep purple text */
+    }
+    h1, h2, h3, h4, h5, h6, .cinzel {
+      font-family: 'Cinzel Decorative', serif;
+      color: #6b4c8b; /* purple */
+    }
+    /* Smooth transitions for buttons and links */
+    a, button {
+      transition: all 0.3s ease;
+    }
+    /* Scrollbar styling for desktop */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #f3f0f7;
+    }
+    ::-webkit-scrollbar-thumb {
+      background-color: #6b4c8b;
+      border-radius: 10px;
+      border: 2px solid #f3f0f7;
+    }
+  </style>
+ </head>
+ <body class="relative min-h-screen flex flex-col">
+  <!-- Top Navigation -->
+  <header class="fixed top-0 left-0 right-0 bg-white bg-opacity-90 backdrop-blur-md shadow-md z-50">
+   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-16">
+    <a class="cinzel text-2xl font-semibold text-purple-700 select-none" href="#">
+     Givara
+    </a>
+    <nav class="hidden md:flex space-x-8 font-semibold text-gray-700 text-lg">
+     <a class="hover:text-purple-600 transition" href="#home">
+      Home
+     </a>
+     <a class="hover:text-purple-600 transition" href="#about">
+      Sobre
+     </a>
+     <a class="hover:text-purple-600 transition" href="#catalog-make-your-perfume">
+      Catálogo &amp; Faça seu Perfume
+     </a>
+     <a class="hover:text-purple-600 transition" href="#contact">
+      Contato
+     </a>
+    </nav>
+    <div class="flex items-center space-x-4">
+     <button aria-label="Abrir carrinho" class="relative text-purple-700 hover:text-purple-900 focus:outline-none focus:ring-2 focus:ring-purple-500 rounded" id="cart-button">
+      <i class="fas fa-shopping-cart fa-lg">
+      </i>
+      <span class="absolute -top-1 -right-2 bg-purple-600 text-white text-xs font-semibold rounded-full px-1.5" id="cart-count">
+       0
+      </span>
+     </button>
+     <button aria-label="Abrir menu" class="md:hidden text-purple-700 hover:text-purple-900 focus:outline-none focus:ring-2 focus:ring-purple-500 rounded" id="menu-button">
+      <i class="fas fa-bars fa-lg">
+      </i>
+     </button>
+    </div>
+   </div>
+   <!-- Mobile Menu -->
+   <nav class="hidden md:hidden bg-white shadow-lg border-t border-gray-200" id="mobile-menu">
+    <a class="block px-6 py-3 text-purple-700 font-semibold hover:bg-purple-50 transition" href="#home">
+     Home
+    </a>
+    <a class="block px-6 py-3 text-purple-700 font-semibold hover:bg-purple-50 transition" href="#about">
+     Sobre
+    </a>
+    <a class="block px-6 py-3 text-purple-700 font-semibold hover:bg-purple-50 transition" href="#catalog-make-your-perfume">
+     Catálogo &amp; Faça seu Perfume
+    </a>
+    <a class="block px-6 py-3 text-purple-700 font-semibold hover:bg-purple-50 transition" href="#contact">
+     Contato
+    </a>
+   </nav>
+  </header>
+  <!-- Cart Sidebar -->
+  <aside class="fixed top-0 right-0 h-full w-80 max-w-full bg-white shadow-xl transform translate-x-full transition-transform duration-300 z-50 flex flex-col" id="cart-sidebar">
+   <div class="flex items-center justify-between p-4 border-b border-gray-200">
+    <h2 class="cinzel text-xl font-semibold text-purple-700">
+     Seu Carrinho
+    </h2>
+    <button aria-label="Fechar carrinho" class="text-purple-700 hover:text-purple-900 focus:outline-none focus:ring-2 focus:ring-purple-500 rounded" id="close-cart">
+     <i class="fas fa-times fa-lg">
+     </i>
+    </button>
+   </div>
+   <div class="flex-1 overflow-y-auto p-4 space-y-4" id="cart-items">
+    <p class="text-gray-500 italic">
+     Seu carrinho está vazio.
+    </p>
+   </div>
+   <div class="p-4 border-t border-gray-200">
+    <div class="flex justify-between text-lg font-semibold text-purple-700 mb-4">
+     <span>
+      Total:
+     </span>
+     <span id="cart-total">
+      R$ 0,00
+     </span>
+    </div>
+    <div class="mb-4">
+     <label class="block text-purple-700 font-semibold mb-2" for="cep-input">
+      Calcular frete (CEP)
+     </label>
+     <input class="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-purple-500 font-medium text-gray-700" id="cep-input" maxlength="8" placeholder="Digite seu CEP" type="text"/>
+     <p class="mt-1 text-sm text-gray-600" id="frete-info">
+      Informe seu CEP para calcular o frete.
+     </p>
+    </div>
+    <div class="mb-4">
+     <label class="block text-purple-700 font-semibold mb-2" for="coupon-input">
+      Aplicar cupom de desconto
+     </label>
+     <input class="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-purple-500 font-medium text-gray-700" id="coupon-input" placeholder="Digite seu cupom" type="text"/>
+     <button class="mt-2 w-full bg-purple-700 hover:bg-purple-800 text-white font-semibold py-2 rounded shadow transition focus:outline-none focus:ring-2 focus:ring-purple-500" id="apply-coupon">
+      Aplicar Cupom
+     </button>
+     <p class="mt-2 text-sm text-green-600 font-semibold hidden" id="coupon-success">
+      Cupom aplicado com sucesso!
+     </p>
+     <p class="mt-2 text-sm text-red-600 font-semibold hidden" id="coupon-error">
+      Cupom inválido ou não aplicável.
+     </p>
+    </div>
+    <button class="w-full bg-purple-700 hover:bg-purple-800 text-white font-semibold py-3 rounded shadow transition focus:outline-none focus:ring-2 focus:ring-purple-500" id="checkout-button">
+     Finalizar Compra
+    </button>
+   </div>
+  </aside>
+  <!-- Floating Cart Button for Mobile -->
+  <button aria-label="Abrir carrinho" class="fixed bottom-6 right-6 bg-purple-700 text-white p-4 rounded-full shadow-lg md:hidden z-40 hover:bg-purple-800 focus:outline-none focus:ring-2 focus:ring-purple-500" id="floating-cart">
+   <i class="fas fa-shopping-cart fa-lg">
+   </i>
+   <span class="absolute -top-1 -right-1 bg-white text-purple-700 text-xs font-semibold rounded-full px-1.5" id="floating-cart-count">
+    0
+   </span>
+  </button>
+  <main class="flex-grow pt-20">
+   <!-- Home Section -->
+   <section class="relative bg-white min-h-[600px] flex flex-col justify-center items-center text-center px-6 sm:px-12 lg:px-24" id="home">
+    <img alt="Banner principal com fundo roxo suave e elegante, com frascos de perfume sofisticados e luz difusa, transmitindo atmosfera refinada e minimalista" class="absolute inset-0 w-full h-full object-cover object-center opacity-20 -z-10 rounded-b-3xl shadow-lg" src="https://placehold.co/1200x600/6b4c8b/ffffff?text=Banner+Principal+Givara"/>
+    <h1 class="cinzel text-5xl sm:text-6xl font-bold text-purple-700 drop-shadow-md mb-6 max-w-4xl leading-tight">
+     Givara - A Essência da Elegância
+    </h1>
+    <p class="text-lg sm:text-xl text-gray-700 max-w-3xl mb-10 font-semibold">
+     Descubra perfumes exclusivos que despertam seus sentidos e envolvem sua alma.
+    </p>
+    <a class="inline-block bg-purple-700 hover:bg-purple-800 text-white font-semibold py-3 px-8 rounded shadow-lg transition transform hover:-translate-y-1 focus:outline-none focus:ring-2 focus:ring-purple-500" href="#catalog-make-your-perfume">
+     Conheça nossos perfumes &amp; Faça seu perfume
+    </a>
+   </section>
+   <!-- Destaques de Produtos -->
+   <section class="max-w-7xl mx-auto px-6 sm:px-12 lg:px-24 py-16" id="highlights">
+    <h2 class="cinzel text-3xl text-purple-700 font-semibold mb-12 text-center">
+     Destaques
+    </h2>
+    <div class="grid grid-cols-1 sm:grid-cols-3 gap-10">
+     <!-- Mais Vendidos -->
+     <article class="bg-white rounded-xl shadow-md p-6 flex flex-col items-center text-center hover:shadow-lg transition-shadow">
+      <img alt="Frasco de perfume sofisticado em vidro translúcido com tampa dourada, sobre fundo branco minimalista" class="w-48 h-48 object-contain mb-6 rounded-lg shadow" src="https://placehold.co/300x300/9f7aea/ffffff?text=Perfume+Mais+Vendido"/>
+      <h3 class="cinzel text-xl text-purple-700 font-semibold mb-2">
+       Mais Vendidos
+      </h3>
+      <p class="text-gray-600 font-medium">
+       Os perfumes que conquistaram nossos clientes pela sofisticação e aroma marcante.
+      </p>
+     </article>
+     <!-- Novidades -->
+     <article class="bg-white rounded-xl shadow-md p-6 flex flex-col items-center text-center hover:shadow-lg transition-shadow">
+      <img alt="Frasco de perfume moderno com design minimalista em vidro fosco lilás, sobre fundo branco elegante" class="w-48 h-48 object-contain mb-6 rounded-lg shadow" src="https://placehold.co/300x300/7c3aed/ffffff?text=Novidades+Givara"/>
+      <h3 class="cinzel text-xl text-purple-700 font-semibold mb-2">
+       Novidades
+      </h3>
+      <p class="text-gray-600 font-medium">
+       Lançamentos exclusivos com fragrâncias inovadoras e envolventes.
+      </p>
+     </article>
+     <!-- Essências Raras -->
+     <article class="bg-white rounded-xl shadow-md p-6 flex flex-col items-center text-center hover:shadow-lg transition-shadow">
+      <img alt="Frasco de perfume vintage com detalhes em prata e vidro âmbar, sobre fundo branco minimalista" class="w-48 h-48 object-contain mb-6 rounded-lg shadow" src="https://placehold.co/300x300/5b21b6/ffffff?text=Ess%C3%AAncias+Raras"/>
+      <h3 class="cinzel text-xl text-purple-700 font-semibold mb-2">
+       Essências Raras
+      </h3>
+      <p class="text-gray-600 font-medium">
+       Fragrâncias exclusivas e difíceis de encontrar, para momentos únicos.
+      </p>
+     </article>
+    </div>
+   </section>
+   <!-- Frases Inspiradoras -->
+   <section class="bg-purple-50 py-16 px-6 sm:px-12 lg:px-24" id="quotes">
+    <div class="max-w-4xl mx-auto space-y-12 text-center">
+     <blockquote class="text-xl italic text-purple-700 font-semibold">
+      “O perfume é a arte invisível que revela a alma.”
+     </blockquote>
+     <blockquote class="text-xl italic text-purple-700 font-semibold">
+      “Cada fragrância é uma viagem sensorial que desperta memórias e emoções.”
+     </blockquote>
+     <blockquote class="text-xl italic text-purple-700 font-semibold">
+      “A elegância está nos detalhes, e o aroma é o toque final perfeito.”
+     </blockquote>
+    </div>
+   </section>
+   <!-- Sobre a Givara -->
+   <section class="max-w-7xl mx-auto px-6 sm:px-12 lg:px-24 py-20" id="about">
+    <h2 class="cinzel text-4xl text-purple-700 font-semibold mb-10 text-center">
+     Sobre a Givara
+    </h2>
+    <div class="flex flex-col lg:flex-row gap-12 items-center">
+     <img alt="Imagem de um atelier de criação de perfumes sofisticados, com frascos, essências e equipamentos delicados, ambiente elegante e minimalista" class="rounded-lg shadow-lg w-full lg:w-1/2 object-cover" src="https://placehold.co/500x400/6b4c8b/ffffff?text=Imagem+de+atelier+de+perfume+sofisticado"/>
+     <div class="lg:w-1/2 text-gray-700 text-lg leading-relaxed font-medium">
+      <p class="mb-6">
+       A Givara nasceu da paixão por fragrâncias que transcendem o comum, oferecendo perfumes que são verdadeiras obras de arte olfativas. Nossa missão é proporcionar uma experiência sensorial única, onde cada essência é cuidadosamente elaborada para envolver e encantar.
+      </p>
+      <p class="mb-6">
+       Valorizamos a exclusividade e o cuidado em cada detalhe, desde a seleção das matérias-primas até o design dos frascos. Cada perfume Givara é uma expressão de elegância, sofisticação e minimalismo, pensado para quem busca algo além do convencional.
+      </p>
+      <p>
+       Convidamos você a descobrir o universo sensorial da Givara, onde aromas raros e sofisticados se encontram para criar momentos inesquecíveis.
+      </p>
+     </div>
+    </div>
+   </section>
+   <!-- Catálogo & Faça seu Perfume -->
+   <section class="max-w-7xl mx-auto px-6 sm:px-12 lg:px-24 py-20" id="catalog-make-your-perfume">
+    <h2 class="cinzel text-4xl text-purple-700 font-semibold mb-10 text-center">
+     Catálogo de Perfumes &amp; Faça seu Perfume
+    </h2>
+    <div class="flex flex-col lg:flex-row gap-12">
+     <!-- Filtros Laterais -->
+     <aside class="w-full lg:w-72 bg-white rounded-xl shadow-md p-6 sticky top-28 self-start h-max">
+      <h3 class="cinzel text-2xl text-purple-700 font-semibold mb-6">
+       Filtros &amp; Busca
+      </h3>
+      <form class="space-y-6 text-gray-700 font-medium" id="filter-search-form">
+       <input aria-label="Buscar perfumes" class="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-purple-500 font-medium text-gray-700" id="search-input" placeholder="Buscar perfumes..." type="search"/>
+       <!-- Família Olfativa -->
+       <fieldset>
+        <legend class="cinzel text-lg mb-3 font-semibold text-purple-700">
+         Família Olfativa
+        </legend>
+        <div class="flex flex-col space-y-2 max-h-48 overflow-y-auto">
+         <label class="inline-flex items-center cursor-pointer">
+          <input class="form-checkbox text-purple-700 filter-checkbox" name="olfativa" type="checkbox" value="amadeirado"/>
+          <span class="ml-2">
+           Amadeirado
+          </span>
+         </label>
+         <label class="inline-flex items-center cursor-pointer">
+          <input class="form-checkbox text-purple-700 filter-checkbox" name="olfativa" type="checkbox" value="floral"/>
+          <span class="ml-2">
+           Floral
+          </span>
+         </label>
+         <label class="inline-flex items-center cursor-pointer">
+          <input class="form-checkbox text-purple-700 filter-checkbox" name="olfativa" type="checkbox" value="oriental"/>
+          <span class="ml-2">
+           Oriental
+          </span>
+         </label>
+         <label class="inline-flex items-center cursor-pointer">
+          <input class="form-checkbox text-purple-700 filter-checkbox" name="olfativa" type="checkbox" value="cítrico"/>
+          <span class="ml-2">
+           Cítrico
+          </span>
+         </label>
+         <label class="inline-flex items-center cursor-pointer">
+          <input class="form-checkbox text-purple-700 filter-checkbox" name="olfativa" type="checkbox" value="fougère"/>
+          <span class="ml-2">
+           Fougère
+          </span>
+         </label>
+        </div>
+       </fieldset>
+       <!-- Preço -->
+       <fieldset>
+        <legend class="cinzel text-lg mb-3 font-semibold text-purple-700">
+         Preço
+        </legend>
+        <div class="flex flex-col space-y-2 max-h-40 overflow-y-auto">
+         <label class="inline-flex items-center cursor-pointer">
+          <input class="form-radio text-purple-700 filter-radio" name="preco" type="radio" value="0-150"/>
+          <span class="ml-2">
+           Até R$150
+          </span>
+         </label>
+         <label class="inline-flex items-center cursor-pointer">
+          <input class="form-radio text-purple-700 filter-radio" name="preco" type="radio" value="151-300"/>
+          <span class="ml-2">
+           R$151 - R$300
+          </span>
+         </label>
+         <label class="inline-flex items-center cursor-pointer">
+          <input class="form-radio text-purple-700 filter-radio" name="preco" type="radio" value="301-600"/>
+          <span class="ml-2">
+           R$301 - R$600
+          </span>
+         </label>
+         <label class="inline-flex items-center cursor-pointer">
+          <input class="form-radio text-purple-700 filter-radio" name="preco" type="radio" value="601+"/>
+          <span class="ml-2">
+           Acima de R$600
+          </span>
+         </label>
+         <label class="inline-flex items-center cursor-pointer">
+          <input checked="" class="form-radio text-purple-700 filter-radio" name="preco" type="radio" value="all"/>
+          <span class="ml-2">
+           Todos
+          </span>
+         </label>
+        </div>
+       </fieldset>
+       <!-- Popularidade -->
+       <fieldset>
+        <legend class="cinzel text-lg mb-3 font-semibold text-purple-700">
+         Popularidade
+        </legend>
+        <div class="flex flex-col space-y-2 max-h-32 overflow-y-auto">
+         <label class="inline-flex items-center cursor-pointer">
+          <input checked="" class="form-radio text-purple-700 filter-radio" name="popularidade" type="radio" value="all"/>
+          <span class="ml-2">
+           Todos
+          </span>
+         </label>
+         <label class="inline-flex items-center cursor-pointer">
+          <input class="form-radio text-purple-700 filter-radio" name="popularidade" type="radio" value="mais_vendidos"/>
+          <span class="ml-2">
+           Mais Vendidos
+          </span>
+         </label>
+         <label class="inline-flex items-center cursor-pointer">
+          <input class="form-radio text-purple-700 filter-radio" name="popularidade" type="radio" value="novidades"/>
+          <span class="ml-2">
+           Novidades
+          </span>
+         </label>
+         <label class="inline-flex items-center cursor-pointer">
+          <input class="form-radio text-purple-700 filter-radio" name="popularidade" type="radio" value="essencias_raras"/>
+          <span class="ml-2">
+           Essências Raras
+          </span>
+         </label>
+        </div>
+       </fieldset>
+       <button class="mt-4 w-full bg-gray-200 hover:bg-gray-300 text-gray-700 font-semibold py-2 rounded transition focus:outline-none focus:ring-2 focus:ring-purple-500" id="reset-filters" type="reset">
+        Limpar Filtros
+       </button>
+      </form>
+     </aside>
+     <!-- Produtos e Faça seu Perfume -->
+     <section class="flex-1 space-y-16">
+      <!-- Produtos -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10" id="products-list">
+       <!-- Produto 1 -->
+       <article aria-label="Perfume Lavanda Suave, R$ 250,00" class="bg-white rounded-xl shadow-md p-6 flex flex-col hover:shadow-lg transition-shadow cursor-pointer group" data-name="Lavanda Suave" data-olfativa="floral" data-popularidade="mais_vendidos" data-price="250" tabindex="0">
+        <img alt="Frasco de perfume Lavanda Suave, vidro translúcido lilás com tampa prateada, sobre fundo branco minimalista" class="w-full h-64 object-contain rounded-lg mb-4 group-hover:scale-105 transition-transform" src="https://placehold.co/400x400/9f7aea/ffffff?text=Lavanda+Suave"/>
+        <h3 class="cinzel text-xl text-purple-700 font-semibold mb-1">
+         Lavanda Suave
+        </h3>
+        <p class="text-purple-900 font-semibold mb-2">
+         R$ 250,00
+        </p>
+        <p class="text-gray-600 flex-grow">
+         Notas olfativas: topo de lavanda fresca, corpo floral de jasmim, fundo amadeirado de cedro.
+        </p>
+        <button aria-label="Adicionar Lavanda Suave ao carrinho" class="mt-4 bg-purple-700 hover:bg-purple-800 text-white font-semibold py-2 rounded shadow transition focus:outline-none focus:ring-2 focus:ring-purple-500 add-to-cart-btn">
+         Adicionar ao carrinho
+        </button>
+       </article>
+       <!-- Produto 2 -->
+       <article aria-label="Perfume Noite Oriental, R$ 320,00" class="bg-white rounded-xl shadow-md p-6 flex flex-col hover:shadow-lg transition-shadow cursor-pointer group" data-name="Noite Oriental" data-olfativa="oriental" data-popularidade="novidades" data-price="320" tabindex="0">
+        <img alt="Frasco de perfume Noite Oriental, vidro âmbar com detalhes dourados, sobre fundo branco elegante" class="w-full h-64 object-contain rounded-lg mb-4 group-hover:scale-105 transition-transform" src="https://placehold.co/400x400/7c3aed/ffffff?text=Noite+Oriental"/>
+        <h3 class="cinzel text-xl text-purple-700 font-semibold mb-1">
+         Noite Oriental
+        </h3>
+        <p class="text-purple-900 font-semibold mb-2">
+         R$ 320,00
+        </p>
+        <p class="text-gray-600 flex-grow">
+         Notas olfativas: topo de especiarias, corpo de rosa e âmbar, fundo de baunilha e patchouli.
+        </p>
+        <button aria-label="Adicionar Noite Oriental ao carrinho" class="mt-4 bg-purple-700 hover:bg-purple-800 text-white font-semibold py-2 rounded shadow transition focus:outline-none focus:ring-2 focus:ring-purple-500 add-to-cart-btn">
+         Adicionar ao carrinho
+        </button>
+       </article>
+       <!-- Produto 3 -->
+       <article aria-label="Perfume Essência Rara Ambarina, R$ 580,00" class="bg-white rounded-xl shadow-md p-6 flex flex-col hover:shadow-lg transition-shadow cursor-pointer group" data-name="Essência Rara Ambarina" data-olfativa="amadeirado" data-popularidade="essencias_raras" data-price="580" tabindex="0">
+        <img alt="Frasco de perfume Essência Rara Ambarina, vidro âmbar escuro com tampa preta fosca, sobre fundo branco minimalista" class="w-full h-64 object-contain rounded-lg mb-4 group-hover:scale-105 transition-transform" src="https://placehold.co/400x400/5b21b6/ffffff?text=Ess%C3%AAncia+Rara+Ambarina"/>
+        <h3 class="cinzel text-xl text-purple-700 font-semibold mb-1">
+         Essência Rara Ambarina
+        </h3>
+        <p class="text-purple-900 font-semibold mb-2">
+         R$ 580,00
+        </p>
+        <p class="text-gray-600 flex-grow">
+         Notas olfativas: topo cítrico, corpo de jasmim e sândalo, fundo ambarino e musk.
+        </p>
+        <button aria-label="Adicionar Essência Rara Ambarina ao carrinho" class="mt-4 bg-purple-700 hover:bg-purple-800 text-white font-semibold py-2 rounded shadow transition focus:outline-none focus:ring-2 focus:ring-purple-500 add-to-cart-btn">
+         Adicionar ao carrinho
+        </button>
+       </article>
+       <!-- Produto 4 -->
+       <article aria-label="Perfume Floral Encanto, R$ 210,00" class="bg-white rounded-xl shadow-md p-6 flex flex-col hover:shadow-lg transition-shadow cursor-pointer group" data-name="Floral Encanto" data-olfativa="floral" data-popularidade="mais_vendidos" data-price="210" tabindex="0">
+        <img alt="Frasco de perfume Floral Encanto, vidro rosa claro translúcido com tampa prateada, sobre fundo branco minimalista" class="w-full h-64 object-contain rounded-lg mb-4 group-hover:scale-105 transition-transform" src="https://placehold.co/400x400/9f7aea/ffffff?text=Floral+Encanto"/>
+        <h3 class="cinzel text-xl text-purple-700 font-semibold mb-1">
+         Floral Encanto
+        </h3>
+        <p class="text-purple-900 font-semibold mb-2">
+         R$ 210,00
+        </p>
+        <p class="text-gray-600 flex-grow">
+         Notas olfativas: topo de bergamota, corpo de peônia e lírio, fundo almíscar branco.
+        </p>
+        <button aria-label="Adicionar Floral Encanto ao carrinho" class="mt-4 bg-purple-700 hover:bg-purple-800 text-white font-semibold py-2 rounded shadow transition focus:outline-none focus:ring-2 focus:ring-purple-500 add-to-cart-btn">
+         Adicionar ao carrinho
+        </button>
+       </article>
+       <!-- Produto 5 -->
+       <article aria-label="Perfume Cítrico Frescor, R$ 180,00" class="bg-white rounded-xl shadow-md p-6 flex flex-col hover:shadow-lg transition-shadow cursor-pointer group" data-name="Cítrico Frescor" data-olfativa="cítrico" data-popularidade="novidades" data-price="180" tabindex="0">
+        <img alt="Frasco de perfume Cítrico Frescor, vidro verde claro translúcido com tampa branca, sobre fundo branco minimalista" class="w-full h-64 object-contain rounded-lg mb-4 group-hover:scale-105 transition-transform" src="https://placehold.co/400x400/7c3aed/ffffff?text=C%C3%ADtrico+Frescor"/>
+        <h3 class="cinzel text-xl text-purple-700 font-semibold mb-1">
+         Cítrico Frescor
+        </h3>
+        <p class="text-purple-900 font-semibold mb-2">
+         R$ 180,00
+        </p>
+        <p class="text-gray-600 flex-grow">
+         Notas olfativas: topo de limão siciliano, corpo de menta e manjericão, fundo de cedro.
+        </p>
+        <button aria-label="Adicionar Cítrico Frescor ao carrinho" class="mt-4 bg-purple-700 hover:bg-purple-800 text-white font-semibold py-2 rounded shadow transition focus:outline-none focus:ring-2 focus:ring-purple-500 add-to-cart-btn">
+         Adicionar ao carrinho
+        </button>
+       </article>
+       <!-- Produto 6 -->
+       <article aria-label="Perfume Amadeirado Noturno, R$ 400,00" class="bg-white rounded-xl shadow-md p-6 flex flex-col hover:shadow-lg transition-shadow cursor-pointer group" data-name="Amadeirado Noturno" data-olfativa="amadeirado" data-popularidade="essencias_raras" data-price="400" tabindex="0">
+        <img alt="Frasco de perfume Amadeirado Noturno, vidro azul escuro com tampa preta fosca, sobre fundo branco elegante" class="w-full h-64 object-contain rounded-lg mb-4 group-hover:scale-105 transition-transform" src="https://placehold.co/400x400/5b21b6/ffffff?text=Amadeirado+Noturno"/>
+        <h3 class="cinzel text-xl text-purple-700 font-semibold mb-1">
+         Amadeirado Noturno
+        </h3>
+        <p class="text-purple-900 font-semibold mb-2">
+         R$ 400,00
+        </p>
+        <p class="text-gray-600 flex-grow">
+         Notas olfativas: topo de pimenta preta, corpo de vetiver e cedro, fundo de âmbar e couro.
+        </p>
+        <button aria-label="Adicionar Amadeirado Noturno ao carrinho" class="mt-4 bg-purple-700 hover:bg-purple-800 text-white font-semibold py-2 rounded shadow transition focus:outline-none focus:ring-2 focus:ring-purple-500 add-to-cart-btn">
+         Adicionar ao carrinho
+        </button>
+       </article>
+      </div>
+      <!-- Faça seu Perfume Button -->
+      <div class="text-center mt-12">
+       <a class="inline-block bg-purple-700 hover:bg-purple-800 text-white font-semibold py-3 px-8 rounded shadow-lg transition transform hover:-translate-y-1 focus:outline-none focus:ring-2 focus:ring-purple-500" href="#make-your-perfume-flow">
+        Faça seu Perfume Personalizado
+       </a>
+      </div>
+      <!-- Faça seu Perfume Flow -->
+      <section aria-label="Fluxo para fazer seu perfume personalizado" class="mt-16" id="make-your-perfume-flow">
+       <h3 class="cinzel text-3xl text-purple-700 font-semibold mb-8 text-center">
+        Faça seu Perfume - Personalize em 3 etapas
+       </h3>
+       <div class="space-y-16">
+        <!-- Etapa 1 - Escolha das Fragrâncias -->
+        <section aria-label="Etapa 1 - Escolha das Fragrâncias" id="step-1-flow">
+         <h4 class="cinzel text-2xl text-purple-700 font-semibold mb-6 border-b border-purple-300 pb-2 text-center">
+          Etapa 1 — Escolha das Fragrâncias
+         </h4>
+         <p class="text-gray-700 font-medium mb-6 text-center max-w-3xl mx-auto">
+          Selecione até 4 fragrâncias para criar seu perfume personalizado. O valor total será atualizado em tempo real no canto da tela.
+         </p>
+         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-10 max-w-5xl mx-auto">
+          <!-- Flores -->
+          <div>
+           <h5 class="cinzel text-xl text-purple-700 font-semibold mb-4 border-b border-purple-300 pb-2">
+            Flores
+           </h5>
+           <ul class="space-y-2 text-gray-700 font-medium">
+            <li>
+             <label class="inline-flex items-center cursor-pointer">
+              <input class="fragrance-checkbox form-checkbox text-purple-700" data-price="10" name="fragrance" type="checkbox" value="Jasmim"/>
+              <span class="ml-2">
+               Jasmim – R$ 10,00
+              </span>
+             </label>
+            </li>
+            <li>
+             <label class="inline-flex items-center cursor-pointer">
+              <input class="fragrance-checkbox form-checkbox text-purple-700" data-price="10" name="fragrance" type="checkbox" value="Rosa"/>
+              <span class="ml-2">
+               Rosa – R$ 10,00
+              </span>
+             </label>
+            </li>
+            <li>
+             <label class="inline-flex items-center cursor-pointer">
+              <input class="fragrance-checkbox form-checkbox text-purple-700" data-price="10" name="fragrance" type="checkbox" value="Lavanda"/>
+              <span class="ml-2">
+               Lavanda – R$ 10,00
+              </span>
+             </label>
+            </li>
+            <li>
+             <label class="inline-flex items-center cursor-pointer">
+              <input class="fragrance-checkbox form-checkbox text-purple-700" data-price="10" name="fragrance" type="checkbox" value="Tuberosa"/>
+              <span class="ml-2">
+               Tuberosa – R$ 10,00
+              </span>
+             </label>
+            </li>
+            <li>
+             <label class="inline-flex items-center cursor-pointer">
+              <input class="fragrance-checkbox form-checkbox text-purple-700" data-price="10" name="fragrance" type="checkbox" value="Flor de Laranjeira"/>
+              <span class="ml-2">
+               Flor de Laranjeira – R$ 10,00
+              </span>
+             </label>
+            </li>
+            <li>
+             <label class="inline-flex items-center cursor-pointer">
+              <input class="fragrance-checkbox form-checkbox text-purple-700" data-price="10" name="fragrance" type="checkbox" value="Gardênia"/>
+              <span class="ml-2">
+               Gardênia – R$ 10,00
+              </span>
+             </label>
+            </li>
+            <li>
+             <label class="inline-flex items-center cursor-pointer">
+              <input class="fragrance-checkbox form-checkbox text-purple-700" data-price="10" name="fragrance" type="checkbox" value="Violetas"/>
+              <span class="ml-2">
+               Violetas – R$ 10,00
+              </span>
+             </label>
+            </li>
+            <li>
+             <label class="inline-flex items-center cursor-pointer">
+              <input class="fragrance-checkbox form-checkbox text-purple-700" data-price="10" name="fragrance" type="checkbox" value="Íris"/>
+              <span class="ml-2">
+               Íris – R$ 10,00
+              </span>
+             </label>
+            </li>
+            <li>
+             <label class="inline-flex items-center cursor-pointer">
+              <input class="fragrance-checkbox form-checkbox text-purple-700" data-price="10" name="fragrance" type="checkbox" value="Frésia"/>
+              <span class="ml-2">
+               Frésia – R$ 10,00
+              </span>
+             </label>
+            </li>
+            <li>
+             <label class="inline-flex items-center cursor-pointer">
+              <input class="fragrance-checkbox form-checkbox text-purple-700" data-price="10" name="fragrance" type="checkbox" value="Camomila"/>
+              <span class="ml-2">
+               Camomila – R$ 10,00
+              </span>
+             </label>
+            </li>
+           </ul>
+          </div>
+          <!-- Frutas -->
+          <div>
+           <h5 class="cinzel text-xl text-purple-700 font-semibold mb-4 border-b border-purple-300 pb-2">
+            Frutas
+           </h5>
+           <ul class="space-y-2 text-gray-700 font-medium">
+            <li>
+             <label class="inline-flex items-center cursor-pointer">
+              <input class="fragrance-checkbox form-checkbox text-purple-700" data-price="20" name="fragrance" type="checkbox" value="Laranja"/>
+              <span class="ml-2">
+               Laranja – R$ 20,00
+              </span>
+             </label>
+            </li>
+            <li>
+             <label class="inline-flex items-center cursor-pointer">
+              <input class="fragrance-checkbox form-checkbox text-purple-700" data-price="20" name="fragrance" type="checkbox" value="Limão"/>
+              <span class="ml-2">
+               Limão – R$ 20,00
+              </span>
+             </label>
+            </li>
+            <li>
+             <label class="inline-flex items-center cursor-pointer">
+              <input class="fragrance-checkbox form-checkbox text-purple-700" data-price="20" name="fragrance" type="checkbox" value="Bergamota"/>
+              <span class="ml-2">
+               Bergamota – R$ 20,00
+              </span>
+             </label>
+            </li>
+            <li>
+             <label class="inline-flex items-center cursor-pointer">
+              <input class="fragrance-checkbox form-checkbox text-purple-700" data-price="20" name="fragrance" type="checkbox" value="Framboesa"/>
+              <span class="ml-2">
+               Framboesa – R$ 20,00
+              </span>
+             </label>
+            </li>
+            <li>
+             <label class="inline-flex items-center cursor-pointer">
+              <input class="fragrance-checkbox form-checkbox text-purple-700" data-price="20" name="fragrance" type="checkbox" value="Cacau"/>
+              <span class="ml-2">
+               Cacau – R$ 20,00
+              </span>
+             </label>
+            </li>
+            <li>
+             <label class="inline-flex items-center cursor-pointer">
+              <input class="fragrance-checkbox form-checkbox text-purple-700" data-price="20" name="fragrance" type="checkbox" value="Morango"/>
+              <span class="ml-2">
+               Morango – R$ 20,00
+              </span>
+             </label>
+            </li>
+            <li>
+             <label class="inline-flex items-center cursor-pointer">
+              <input class="fragrance-checkbox form-checkbox text-purple-700" data-price="20" name="fragrance" type="checkbox" value="Abacaxi"/>
+              <span class="ml-2">
+               Abacaxi – R$ 20,00
+              </span>
+             </label>
+            </li>
+            <li>
+             <label class="inline-flex items-center cursor-pointer">
+              <input class="fragrance-checkbox form-checkbox text-purple-700" data-price="20" name="fragrance" type="checkbox" value="Pêssego"/>
+              <span class="ml-2">
+               Pêssego – R$ 20,00
+              </span>
+             </label>
+            </li>
+            <li>
+             <label class="inline-flex items-center cursor-pointer">
+              <input class="fragrance-checkbox form-checkbox text-purple-700" data-price="20" name="fragrance" type="checkbox" value="Manga"/>
+              <span class="ml-2">
+               Manga – R$ 20,00
+              </span>
+             </label>
+            </li>
+            <li>
+             <label class="inline-flex items-center cursor-pointer">
+              <input class="fragrance-checkbox form-checkbox text-purple-700" data-price="20" name="fragrance" type="checkbox" value="Coco"/>
+              <span class="ml-2">
+               Coco – R$ 20,00
+              </span>
+             </label>
+            </li>
+           </ul>
+          </div>
+          <!-- Ervas e Folhas -->
+          <div>
+           <h5 class="cinzel text-xl text-purple-700 font-semibold mb-4 border-b border-purple-300 pb-2">
+            Ervas e Folhas
+           </h5>
+           <ul class="space-y-2 text-gray-700 font-medium">
+            <li>
+             <label class="inline-flex items-center cursor-pointer">
+              <input class="fragrance-checkbox form-checkbox text-purple-700" data-price="20" name="fragrance" type="checkbox" value="Alecrim"/>
+              <span class="ml-2">
+               Alecrim – R$ 20,00
+              </span>
+             </label>
+            </li>
+            <li>
+             <label class="inline-flex items-center cursor-pointer">
+              <input class="fragrance-checkbox form-checkbox text-purple-700" data-price="20" name="fragrance" type="checkbox" value="Menta"/>
+              <span class="ml-2">
+               Menta – R$ 20,00
+              </span>
+             </label>
+            </li>
+            <li>
+             <label class="inline-flex items-center cursor-pointer">
+              <input class="fragrance-checkbox form-checkbox text-purple-700" data-price="20" name="fragrance" type="checkbox" value="Eucalipto"/>
+              <span class="ml-2">
+               Eucalipto – R$ 20,00
+              </span>
+             </label>
+            </li>
+            <li>
+             <label class="inline-flex items-center cursor-pointer">
+              <input class="fragrance-checkbox form-checkbox text-purple-700" data-price="20" name="fragrance" type="checkbox" value="Tomilho"/>
+              <span class="ml-2">
+               Tomilho – R$ 20,00
+              </span>
+             </label>
+            </li>
+            <li>
+             <label class="inline-flex items-center cursor-pointer">
+              <input class="fragrance-checkbox form-checkbox text-purple-700" data-price="20" name="fragrance" type="checkbox" value="Manjericão"/>
+              <span class="ml-2">
+               Manjericão – R$ 20,00
+              </span>
+             </label>
+            </li>
+            <li>
+             <label class="inline-flex items-center cursor-pointer">
+              <input class="fragrance-checkbox form-checkbox text-purple-700" data-price="20" name="fragrance" type="checkbox" value="Sálvia"/>
+              <span class="ml-2">
+               Sálvia – R$ 20,00
+              </span>
+             </label>
+            </li>
+            <li>
+             <label class="inline-flex items-center cursor-pointer">
+              <input class="fragrance-checkbox form-checkbox text-purple-700" data-price="20" name="fragrance" type="checkbox" value="Lemongrass"/>
+              <span class="ml-2">
+               Lemongrass – R$ 20,00
+              </span>
+             </label>
+            </li>
+            <li>
+             <label class="inline-flex items-center cursor-pointer">
+              <input class="fragrance-checkbox form-checkbox text-purple-700" data-price="20" name="fragrance" type="checkbox" value="Hortelã-pimenta"/>
+              <span class="ml-2">
+               Hortelã-pimenta – R$ 20,00
+              </span>
+             </label>
+            </li>
+           </ul>
+          </div>
+          <!-- Madeiras -->
+          <div>
+           <h5 class="cinzel text-xl text-purple-700 font-semibold mb-4 border-b border-purple-300 pb-2">
+            Madeiras
+           </h5>
+           <ul class="space-y-2 text-gray-700 font-medium">
+            <li>
+             <label class="inline-flex items-center cursor-pointer">
+              <input class="fragrance-checkbox form-checkbox text-purple-700" data-price="20" name="fragrance" type="checkbox" value="Sândalo"/>
+              <span class="ml-2">
+               Sândalo – R$ 20,00
+              </span>
+             </label>
+            </li>
+            <li>
+             <label class="inline-flex items-center cursor-pointer">
+              <input class="fragrance-checkbox form-checkbox text-purple-700" data-price="20" name="fragrance" type="checkbox" value="Cedro"/>
+              <span class="ml-2">
+               Cedro – R$ 20,00
+              </span>
+             </label>
+            </li>
+            <li>
+             <label class="inline-flex items-center cursor-pointer">
+              <input class="fragrance-checkbox form-checkbox text-purple-700" data-price="20" name="fragrance" type="checkbox" value="Vetiver"/>
+              <span class="ml-2">
+               Vetiver – R$ 20,00
+              </span>
+             </label>
+            </li>
+            <li>
+             <label class="inline-flex items-center cursor-pointer">
+              <input class="fragrance-checkbox form-checkbox text-purple-700" data-price="20" name="fragrance" type="checkbox" value="Cipreste"/>
+              <span class="ml-2">
+               Cipreste – R$ 20,00
+              </span>
+             </label>
+            </li>
+            <li>
+             <label class="inline-flex items-center cursor-pointer">
+              <input class="fragrance-checkbox form-checkbox text-purple-700" data-price="20" name="fragrance" type="checkbox" value="Patchouli"/>
+              <span class="ml-2">
+               Patchouli – R$ 20,00
+              </span>
+             </label>
+            </li>
+           </ul>
+          </div>
+          <!-- Especiarias -->
+          <div>
+           <h5 class="cinzel text-xl text-purple-700 font-semibold mb-4 border-b border-purple-300 pb-2">
+            Especiarias
+           </h5>
+           <ul class="space-y-2 text-gray-700 font-medium">
+            <li>
+             <label class="inline-flex items-center cursor-pointer">
+              <input class="fragrance-checkbox form-checkbox text-purple-700" data-price="30" name="fragrance" type="checkbox" value="Canela"/>
+              <span class="ml-2">
+               Canela – R$ 30,00
+              </span>
+             </label>
+            </li>
+            <li>
+             <label class="inline-flex items-center cursor-pointer">
+              <input class="fragrance-checkbox form-checkbox text-purple-700" data-price="30" name="fragrance" type="checkbox" value="Cravo"/>
+              <span class="ml-2">
+               Cravo – R$ 30,00
+              </span>
+             </label>
+            </li>
+            <li>
+             <label class="inline-flex items-center cursor-pointer">
+              <input class="fragrance-checkbox form-checkbox text-purple-700" data-price="30" name="fragrance" type="checkbox" value="Cardamomo"/>
+              <span class="ml-2">
+               Cardamomo – R$ 30,00
+              </span>
+             </label>
+            </li>
+            <li>
+             <label class="inline-flex items-center cursor-pointer">
+              <input class="fragrance-checkbox form-checkbox text-purple-700" data-price="30" name="fragrance" type="checkbox" value="Pimenta Rosa"/>
+              <span class="ml-2">
+               Pimenta Rosa – R$ 30,00
+              </span>
+             </label>
+            </li>
+            <li>
+             <label class="inline-flex items-center cursor-pointer">
+              <input class="fragrance-checkbox form-checkbox text-purple-700" data-price="30" name="fragrance" type="checkbox" value="Gengibre"/>
+              <span class="ml-2">
+               Gengibre – R$ 30,00
+              </span>
+             </label>
+            </li>
+            <li>
+             <label class="inline-flex items-center cursor-pointer">
+              <input class="fragrance-checkbox form-checkbox text-purple-700" data-price="30" name="fragrance" type="checkbox" value="Noz-moscada"/>
+              <span class="ml-2">
+               Noz-moscada – R$ 30,00
+              </span>
+             </label>
+            </li>
+           </ul>
+          </div>
+          <!-- Resinas e Bálsamos -->
+          <div>
+           <h5 class="cinzel text-xl text-purple-700 font-semibold mb-4 border-b border-purple-300 pb-2">
+            Resinas e Bálsamos
+           </h5>
+           <ul class="space-y-2 text-gray-700 font-medium">
+            <li>
+             <label class="inline-flex items-center cursor-pointer">
+              <input class="fragrance-checkbox form-checkbox text-purple-700" data-price="30" name="fragrance" type="checkbox" value="Benjoim"/>
+              <span class="ml-2">
+               Benjoim – R$ 30,00
+              </span>
+             </label>
+            </li>
+            <li>
+             <label class="inline-flex items-center cursor-pointer">
+              <input class="fragrance-checkbox form-checkbox text-purple-700" data-price="30" name="fragrance" type="checkbox" value="Mirra"/>
+              <span class="ml-2">
+               Mirra – R$ 30,00
+              </span>
+             </label>
+            </li>
+            <li>
+             <label class="inline-flex items-center cursor-pointer">
+              <input class="fragrance-checkbox form-checkbox text-purple-700" data-price="30" name="fragrance" type="checkbox" value="Incenso"/>
+              <span class="ml-2">
+               Incenso – R$ 30,00
+              </span>
+             </label>
+            </li>
+            <li>
+             <label class="inline-flex items-center cursor-pointer">
+              <input class="fragrance-checkbox form-checkbox text-purple-700" data-price="30" name="fragrance" type="checkbox" value="Frankincense"/>
+              <span class="ml-2">
+               Frankincense – R$ 30,00
+              </span>
+             </label>
+            </li>
+           </ul>
+          </div>
+          <!-- Outros -->
+          <div>
+           <h5 class="cinzel text-xl text-purple-700 font-semibold mb-4 border-b border-purple-300 pb-2">
+            Outros
+           </h5>
+           <ul class="space-y-2 text-gray-700 font-medium">
+            <li>
+             <label class="inline-flex items-center cursor-pointer">
+              <input class="fragrance-checkbox form-checkbox text-purple-700" data-price="20" name="fragrance" type="checkbox" value="Baunilha"/>
+              <span class="ml-2">
+               Baunilha – R$ 20,00
+              </span>
+             </label>
+            </li>
+            <li>
+             <label class="inline-flex items-center cursor-pointer">
+              <input class="fragrance-checkbox form-checkbox text-purple-700" data-price="20" name="fragrance" type="checkbox" value="Âmbar"/>
+              <span class="ml-2">
+               Âmbar – R$ 20,00
+              </span>
+             </label>
+            </li>
+            <li>
+             <label class="inline-flex items-center cursor-pointer">
+              <input class="fragrance-checkbox form-checkbox text-purple-700" data-price="20" name="fragrance" type="checkbox" value="Almíscar (natural)"/>
+              <span class="ml-2">
+               Almíscar (natural) – R$ 20,00
+              </span>
+             </label>
+            </li>
+            <li>
+             <label class="inline-flex items-center cursor-pointer">
+              <input class="fragrance-checkbox form-checkbox text-purple-700" data-price="20" name="fragrance" type="checkbox" value="Fava Tonka"/>
+              <span class="ml-2">
+               Fava Tonka – R$ 20,00
+              </span>
+             </label>
+            </li>
+            <li>
+             <label class="inline-flex items-center cursor-pointer">
+              <input class="fragrance-checkbox form-checkbox text-purple-700" data-price="20" name="fragrance" type="checkbox" value="Tonka"/>
+              <span class="ml-2">
+               Tonka – R$ 20,00
+              </span>
+             </label>
+            </li>
+           </ul>
+          </div>
+          <!-- Raras -->
+          <div>
+           <h5 class="cinzel text-xl text-purple-700 font-semibold mb-4 border-b border-purple-300 pb-2">
+            Raras
+           </h5>
+           <ul class="space-y-2 text-gray-700 font-medium">
+            <li>
+             <label class="inline-flex items-center cursor-pointer">
+              <input class="fragrance-checkbox form-checkbox text-purple-700" data-price="50" name="fragrance" type="checkbox" value="Oud"/>
+              <span class="ml-2">
+               Oud – R$ 50,00
+              </span>
+             </label>
+            </li>
+            <li>
+             <label class="inline-flex items-center cursor-pointer">
+              <input class="fragrance-checkbox form-checkbox text-purple-700" data-price="50" name="fragrance" type="checkbox" value="Íris (Manteiga de íris)"/>
+              <span class="ml-2">
+               Íris (Manteiga de íris) – R$ 50,00
+              </span>
+             </label>
+            </li>
+            <li>
+             <label class="inline-flex items-center cursor-pointer">
+              <input class="fragrance-checkbox form-checkbox text-purple-700" data-price="50" name="fragrance" type="checkbox" value="Osmanthus"/>
+              <span class="ml-2">
+               Osmanthus – R$ 50,00
+              </span>
+             </label>
+            </li>
+            <li>
+             <label class="inline-flex items-center cursor-pointer">
+              <input class="fragrance-checkbox form-checkbox text-purple-700" data-price="50" name="fragrance" type="checkbox" value="Ambrette"/>
+              <span class="ml-2">
+               Ambrette – R$ 50,00
+              </span>
+             </label>
+            </li>
+            <li>
+             <label class="inline-flex items-center cursor-pointer">
+              <input class="fragrance-checkbox form-checkbox text-purple-700" data-price="50" name="fragrance" type="checkbox" value="Mimosa"/>
+              <span class="ml-2">
+               Mimosa – R$ 50,00
+              </span>
+             </label>
+            </li>
+            <li>
+             <label class="inline-flex items-center cursor-pointer">
+              <input class="fragrance-checkbox form-checkbox text-purple-700" data-price="50" name="fragrance" type="checkbox" value="Champaca"/>
+              <span class="ml-2">
+               Champaca – R$ 50,00
+              </span>
+             </label>
+            </li>
+            <li>
+             <label class="inline-flex items-center cursor-pointer">
+              <input class="fragrance-checkbox form-checkbox text-purple-700" data-price="50" name="fragrance" type="checkbox" value="Flor de Tiaré"/>
+              <span class="ml-2">
+               Flor de Tiaré – R$ 50,00
+              </span>
+             </label>
+            </li>
+            <li>
+             <label class="inline-flex items-center cursor-pointer">
+              <input class="fragrance-checkbox form-checkbox text-purple-700" data-price="50" name="fragrance" type="checkbox" value="Gálbano"/>
+              <span class="ml-2">
+               Gálbano – R$ 50,00
+              </span>
+             </label>
+            </li>
+            <li>
+             <label class="inline-flex items-center cursor-pointer">
+              <input class="fragrance-checkbox form-checkbox text-purple-700" data-price="50" name="fragrance" type="checkbox" value="Mate"/>
+              <span class="ml-2">
+               Mate – R$ 50,00
+              </span>
+             </label>
+            </li>
+            <li>
+             <label class="inline-flex items-center cursor-pointer">
+              <input class="fragrance-checkbox form-checkbox text-purple-700" data-price="50" name="fragrance" type="checkbox" value="Lentisco"/>
+              <span class="ml-2">
+               Lentisco – R$ 50,00
+              </span>
+             </label>
+            </li>
+            <li>
+             <label class="inline-flex items-center cursor-pointer">
+              <input class="fragrance-checkbox form-checkbox text-purple-700" data-price="50" name="fragrance" type="checkbox" value="Bambu"/>
+              <span class="ml-2">
+               Bambu – R$ 50,00
+              </span>
+             </label>
+            </li>
+           </ul>
+          </div>
+         </div>
+         <div class="mt-8 text-center">
+          <button class="bg-purple-700 hover:bg-purple-800 text-white font-semibold py-3 px-8 rounded shadow-lg transition focus:outline-none focus:ring-2 focus:ring-purple-500" disabled="" id="to-step-2-flow">
+           Concluir fragrâncias
+          </button>
+         </div>
+        </section>
+        <!-- Etapa 2 - Escolha do Frasco -->
+        <section aria-label="Etapa 2 - Escolha do Frasco" class="hidden" id="step-2-flow">
+         <h4 class="cinzel text-2xl text-purple-700 font-semibold mb-6 border-b border-purple-300 pb-2 text-center">
+          Etapa 2 — Escolha do Frasco
+         </h4>
+         <p class="text-gray-700 font-medium mb-6 text-center max-w-3xl mx-auto">
+          Escolha o frasco para seu perfume personalizado. O valor será somado ao total das fragrâncias.
+         </p>
+         <div class="max-w-5xl mx-auto">
+          <div class="mb-8">
+           <h5 class="cinzel text-xl text-purple-700 font-semibold mb-4 border-b border-purple-300 pb-2">
+            Femininos
+           </h5>
+           <div class="grid grid-cols-2 sm:grid-cols-4 gap-6">
+            <label class="cursor-pointer border-2 border-transparent rounded-lg p-2 hover:border-purple-700 transition relative">
+             <input class="form-radio hidden frasco-radio" data-price="100" name="frasco" type="radio" value="Feminino 1"/>
+             <img alt="Frasco feminino 1, vidro transparente com design elegante e tampa prateada" class="w-full h-40 object-contain rounded-lg" src="https://placehold.co/200x160/9f7aea/ffffff?text=Frasco+Feminino+1"/>
+             <span class="absolute bottom-2 left-2 bg-purple-700 text-white text-sm font-semibold px-2 rounded">
+              R$ 100,00
+             </span>
+            </label>
+            <label class="cursor-pointer border-2 border-transparent rounded-lg p-2 hover:border-purple-700 transition relative">
+             <input class="form-radio hidden frasco-radio" data-price="120" name="frasco" type="radio" value="Feminino 2"/>
+             <img alt="Frasco feminino 2, vidro lilás translúcido com tampa dourada" class="w-full h-40 object-contain rounded-lg" src="https://placehold.co/200x160/b9a0f2/ffffff?text=Frasco+Feminino+2"/>
+             <span class="absolute bottom-2 left-2 bg-purple-700 text-white text-sm font-semibold px-2 rounded">
+              R$ 120,00
+             </span>
+            </label>
+            <label class="cursor-pointer border-2 border-transparent rounded-lg p-2 hover:border-purple-700 transition relative">
+             <input class="form-radio hidden frasco-radio" data-price="150" name="frasco" type="radio" value="Feminino 3"/>
+             <img alt="Frasco feminino 3, vidro rosa claro com tampa prateada" class="w-full h-40 object-contain rounded-lg" src="https://placehold.co/200x160/d8b4fe/ffffff?text=Frasco+Feminino+3"/>
+             <span class="absolute bottom-2 left-2 bg-purple-700 text-white text-sm font-semibold px-2 rounded">
+              R$ 150,00
+             </span>
+            </label>
+            <label class="cursor-pointer border-2 border-transparent rounded-lg p-2 hover:border-purple-700 transition relative">
+             <input class="form-radio hidden frasco-radio" data-price="180" name="frasco" type="radio" value="Feminino 4"/>
+             <img alt="Frasco feminino 4, vidro lilás escuro com tampa dourada" class="w-full h-40 object-contain rounded-lg" src="https://placehold.co/200x160/7c3aed/ffffff?text=Frasco+Feminino+4"/>
+             <span class="absolute bottom-2 left-2 bg-purple-700 text-white text-sm font-semibold px-2 rounded">
+              R$ 180,00
+             </span>
+            </label>
+           </div>
+          </div>
+          <div>
+           <h5 class="cinzel text-xl text-purple-700 font-semibold mb-4 border-b border-purple-300 pb-2">
+            Masculinos
+           </h5>
+           <div class="grid grid-cols-2 sm:grid-cols-4 gap-6">
+            <label class="cursor-pointer border-2 border-transparent rounded-lg p-2 hover:border-purple-700 transition relative">
+             <input class="form-radio hidden frasco-radio" data-price="100" name="frasco" type="radio" value="Masculino 1"/>
+             <img alt="Frasco masculino 1, vidro azul escuro com tampa preta fosca" class="w-full h-40 object-contain rounded-lg" src="https://placehold.co/200x160/5b21b6/ffffff?text=Frasco+Masculino+1"/>
+             <span class="absolute bottom-2 left-2 bg-purple-700 text-white text-sm font-semibold px-2 rounded">
+              R$ 100,00
+             </span>
+            </label>
+            <label class="cursor-pointer border-2 border-transparent rounded-lg p-2 hover:border-purple-700 transition relative">
+             <input class="form-radio hidden frasco-radio" data-price="120" name="frasco" type="radio" value="Masculino 2"/>
+             <img alt="Frasco masculino 2, vidro cinza translúcido com tampa preta" class="w-full h-40 object-contain rounded-lg" src="https://placehold.co/200x160/8b8b8b/ffffff?text=Frasco+Masculino+2"/>
+             <span class="absolute bottom-2 left-2 bg-purple-700 text-white text-sm font-semibold px-2 rounded">
+              R$ 120,00
+             </span>
+            </label>
+            <label class="cursor-pointer border-2 border-transparent rounded-lg p-2 hover:border-purple-700 transition relative">
+             <input class="form-radio hidden frasco-radio" data-price="150" name="frasco" type="radio" value="Masculino 3"/>
+             <img alt="Frasco masculino 3, vidro azul claro translúcido com tampa preta fosca" class="w-full h-40 object-contain rounded-lg" src="https://placehold.co/200x160/7ea6ff/ffffff?text=Frasco+Masculino+3"/>
+             <span class="absolute bottom-2 left-2 bg-purple-700 text-white text-sm font-semibold px-2 rounded">
+              R$ 150,00
+             </span>
+            </label>
+            <label class="cursor-pointer border-2 border-transparent rounded-lg p-2 hover:border-purple-700 transition relative">
+             <input class="form-radio hidden frasco-radio" data-price="180" name="frasco" type="radio" value="Masculino 4"/>
+             <img alt="Frasco masculino 4, vidro azul escuro fosco com tampa preta" class="w-full h-40 object-contain rounded-lg" src="https://placehold.co/200x160/4b5563/ffffff?text=Frasco+Masculino+4"/>
+             <span class="absolute bottom-2 left-2 bg-purple-700 text-white text-sm font-semibold px-2 rounded">
+              R$ 180,00
+             </span>
+            </label>
+           </div>
+          </div>
+         </div>
+         <div class="mt-8 text-center">
+          <button class="bg-purple-700 hover:bg-purple-800 text-white font-semibold py-3 px-8 rounded shadow-lg transition focus:outline-none focus:ring-2 focus:ring-purple-500" disabled="" id="to-step-3-flow">
+           Concluir frasco
+          </button>
+         </div>
+        </section>
+        <!-- Etapa 3 - Escolha do Kit -->
+        <section aria-label="Etapa 3 - Escolha do Kit" class="hidden" id="step-3-flow">
+         <h4 class="cinzel text-2xl text-purple-700 font-semibold mb-6 border-b border-purple-300 pb-2 text-center">
+          Etapa 3 — Escolha do Kit
+         </h4>
+         <p class="text-gray-700 font-medium mb-6 text-center max-w-3xl mx-auto">
+          Escolha o kit que acompanha seu perfume personalizado.
+         </p>
+         <div class="max-w-5xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+          <label class="cursor-pointer border-2 border-transparent rounded-lg p-4 hover:border-purple-700 transition relative flex flex-col items-center text-center">
+           <input class="form-radio hidden kit-radio" data-price="20" name="kit" type="radio" value="Kit Essencial"/>
+           <img alt="Kit Essencial com perfume personalizado 30ml ou 50ml e sabonete líquido perfumado 200ml" class="w-40 h-40 object-contain rounded-lg mb-4" src="https://placehold.co/160x160/9f7aea/ffffff?text=Kit+Essencial"/>
+           <h5 class="cinzel text-xl text-purple-700 font-semibold mb-2">
+            Kit Essencial
+           </h5>
+           <p class="text-purple-900 font-semibold mb-1">
+            R$ 20,00
+           </p>
+           <p class="text-gray-700 font-medium">
+            Perfume personalizado (30ml ou 50ml)
+            <br/>
+            Sabonete líquido perfumado (200ml)
+           </p>
+          </label>
+          <label class="cursor-pointer border-2 border-transparent rounded-lg p-4 hover:border-purple-700 transition relative flex flex-col items-center text-center">
+           <input class="form-radio hidden kit-radio" data-price="30" name="kit" type="radio" value="Kit Completo"/>
+           <img alt="Kit Completo com perfume personalizado 50ml ou 100ml, loção hidratante perfumada 250ml e sabonete líquido perfumado 200ml" class="w-40 h-40 object-contain rounded-lg mb-4" src="https://placehold.co/160x160/7c3aed/ffffff?text=Kit+Completo"/>
+           <h5 class="cinzel text-xl text-purple-700 font-semibold mb-2">
+            Kit Completo
+           </h5>
+           <p class="text-purple-900 font-semibold mb-1">
+            R$ 30,00
+           </p>
+           <p class="text-gray-700 font-medium">
+            Perfume personalizado (50ml ou 100ml)
+            <br/>
+            Loção hidratante perfumada (250ml)
+            <br/>
+            Sabonete líquido perfumado (200ml)
+           </p>
+          </label>
+          <label class="cursor-pointer border-2 border-transparent rounded-lg p-4 hover:border-purple-700 transition relative flex flex-col items-center text-center">
+           <input class="form-radio hidden kit-radio" data-price="50" name="kit" type="radio" value="Kit Premium"/>
+           <img alt="Kit Premium com perfume personalizado 100ml, loção hidratante perfumada 250ml, óleo corporal perfumado 150ml e vela aromática" class="w-40 h-40 object-contain rounded-lg mb-4" src="https://placehold.co/160x160/5b21b6/ffffff?text=Kit+Premium"/>
+           <h5 class="cinzel text-xl text-purple-700 font-semibold mb-2">
+            Kit Premium
+           </h5>
+           <p class="text-purple-900 font-semibold mb-1">
+            R$ 50,00
+           </p>
+           <p class="text-gray-700 font-medium">
+            Perfume personalizado (100ml)
+            <br/>
+            Loção hidratante perfumada (250ml)
+            <br/>
+            Óleo corporal perfumado (150ml)
+            <br/>
+            Vela aromática inspirada na fragrância
+           </p>
+          </label>
+          <label class="cursor-pointer border-2 border-purple-700 rounded-lg p-4 relative flex flex-col items-center text-center">
+           <input checked="" class="form-radio hidden kit-radio" data-price="0" name="kit" type="radio" value="Perfume Individual"/>
+           <img alt="Perfume individual sem custo adicional" class="w-40 h-40 object-contain rounded-lg mb-4" src="https://placehold.co/160x160/9f7aea/ffffff?text=Perfume+Individual"/>
+           <h5 class="cinzel text-xl text-purple-700 font-semibold mb-2">
+            Perfume Individual
+           </h5>
+           <p class="text-purple-900 font-semibold mb-1">
+            Sem custo adicional
+           </p>
+          </label>
+         </div>
+         <div class="mt-8 text-center">
+          <button class="bg-purple-700 hover:bg-purple-800 text-white font-semibold py-3 px-8 rounded shadow-lg transition focus:outline-none focus:ring-2 focus:ring-purple-500" id="finalize-customization-flow">
+           Finalizar personalização
+          </button>
+         </div>
+        </section>
+       </div>
+      </section>
+     </section>
+    </div>
+   </section>
+   <!-- Newsletter & Footer -->
+   <footer class="bg-white border-t border-gray-200 mt-20" id="contact">
+    <div class="max-w-7xl mx-auto px-6 sm:px-12 lg:px-24 py-16 grid grid-cols-1 md:grid-cols-3 gap-12">
+     <div>
+      <h3 class="cinzel text-2xl text-purple-700 font-semibold mb-6">
+       Givara
+      </h3>
+      <p class="text-gray-700 font-medium leading-relaxed">
+       Boutique virtual de perfumes sofisticados, trazendo exclusividade e elegância para sua experiência olfativa.
+      </p>
+      <div class="flex space-x-6 mt-6 text-purple-700 text-2xl">
+       <a aria-label="Facebook" class="hover:text-purple-900 transition" href="https://facebook.com" rel="noopener noreferrer" target="_blank">
+        <i class="fab fa-facebook-square">
+        </i>
+       </a>
+       <a aria-label="Instagram" class="hover:text-purple-900 transition" href="https://instagram.com" rel="noopener noreferrer" target="_blank">
+        <i class="fab fa-instagram">
+        </i>
+       </a>
+       <a aria-label="Twitter" class="hover:text-purple-900 transition" href="https://twitter.com" rel="noopener noreferrer" target="_blank">
+        <i class="fab fa-twitter-square">
+        </i>
+       </a>
+       <a aria-label="LinkedIn" class="hover:text-purple-900 transition" href="https://linkedin.com" rel="noopener noreferrer" target="_blank">
+        <i class="fab fa-linkedin">
+        </i>
+       </a>
+      </div>
+     </div>
+     <div>
+      <h3 class="cinzel text-2xl text-purple-700 font-semibold mb-6">
+       Links Rápidos
+      </h3>
+      <ul class="text-gray-700 font-medium space-y-3">
+       <li>
+        <a class="hover:text-purple-600 transition" href="#home">
+         Home
+        </a>
+       </li>
+       <li>
+        <a class="hover:text-purple-600 transition" href="#about">
+         Sobre
+        </a>
+       </li>
+       <li>
+        <a class="hover:text-purple-600 transition" href="#catalog-make-your-perfume">
+         Catálogo &amp; Faça seu Perfume
+        </a>
+       </li>
+       <li>
+        <a class="hover:text-purple-600 transition" href="#contact">
+         Contato
+        </a>
+       </li>
+      </ul>
+     </div>
+     <div>
+      <h3 class="cinzel text-2xl text-purple-700 font-semibold mb-6">
+       Assine nossa Newsletter
+      </h3>
+      <form class="flex flex-col space-y-4" id="newsletter-form">
+       <input aria-label="Seu e-mail" class="px-4 py-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent font-medium text-gray-700" name="email" placeholder="Seu e-mail" required="" type="email"/>
+       <button class="bg-purple-700 hover:bg-purple-800 text-white font-semibold py-3 rounded shadow transition focus:outline-none focus:ring-2 focus:ring-purple-500" type="submit">
+        Assinar
+       </button>
+      </form>
+     </div>
+    </div>
+    <div class="text-center text-gray-500 text-sm py-6 border-t border-gray-200 select-none">
+     © 2024 Givara. Todos os direitos reservados.
+    </div>
+   </footer>
+  </main>
+  <script>
+   // Mobile menu toggle
+    const menuButton = document.getElementById('menu-button');
+    const mobileMenu = document.getElementById('mobile-menu');
+    menuButton.addEventListener('click', () => {
+      mobileMenu.classList.toggle('hidden');
+    });
 
-    <style>
+    // Cart sidebar toggle
+    const cartButton = document.getElementById('cart-button');
+    const floatingCart = document.getElementById('floating-cart');
+    const cartSidebar = document.getElementById('cart-sidebar');
+    const closeCart = document.getElementById('close-cart');
 
-        body{
-        font-family:'EB Garamond',serif;
-        background-color:#fff;
-        color:#3b3054;
+    function openCart() {
+      cartSidebar.classList.remove('translate-x-full');
+      cartSidebar.classList.add('translate-x-0');
+    }
+    function closeCartSidebar() {
+      cartSidebar.classList.add('translate-x-full');
+      cartSidebar.classList.remove('translate-x-0');
+    }
+
+    cartButton.addEventListener('click', openCart);
+    floatingCart.addEventListener('click', openCart);
+    closeCart.addEventListener('click', closeCartSidebar);
+
+    // Close cart on outside click
+    document.addEventListener('click', (e) => {
+      if (!cartSidebar.contains(e.target) && !cartButton.contains(e.target) && !floatingCart.contains(e.target)) {
+        closeCartSidebar();
+      }
+    });
+
+    // Cart data and functions
+    const cartItemsContainer = document.getElementById('cart-items');
+    const cartCount = document.getElementById('cart-count');
+    const floatingCartCount = document.getElementById('floating-cart-count');
+    const cartTotal = document.getElementById('cart-total');
+
+    let cart = [];
+
+    // Format price BRL
+    function formatPriceBRL(value) {
+      return value.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+    }
+
+    // Update cart UI
+    function updateCartUI() {
+      cartCount.textContent = cart.length;
+      floatingCartCount.textContent = cart.length;
+      if (cart.length === 0) {
+        cartItemsContainer.innerHTML = '<p class="text-gray-500 italic">Seu carrinho está vazio.</p>';
+        cartTotal.textContent = formatPriceBRL(0);
+        return;
+      }
+      let total = 0;
+      cartItemsContainer.innerHTML = '';
+      cart.forEach((item, index) => {
+        total += item.price;
+        const itemEl = document.createElement('div');
+        itemEl.className = 'flex items-center justify-between bg-purple-50 rounded-lg p-3 shadow-inner';
+        itemEl.innerHTML = `
+          <div class="flex items-center space-x-4">
+            <img src="${item.image}" alt="${item.name} - imagem do produto no carrinho" class="w-16 h-16 object-contain rounded" />
+            <div>
+              <h4 class="cinzel text-purple-700 font-semibold">${item.name}</h4>
+              <p class="text-gray-700 font-medium">${formatPriceBRL(item.price)}</p>
+            </div>
+          </div>
+          <button aria-label="Remover ${item.name} do carrinho" data-index="${index}" class="text-purple-700 hover:text-purple-900 focus:outline-none focus:ring-2 focus:ring-purple-500 rounded">
+            <i class="fas fa-trash-alt"></i>
+          </button>
+        `;
+        cartItemsContainer.appendChild(itemEl);
+      });
+      cartTotal.textContent = formatPriceBRL(total);
+
+      // Add remove event listeners
+      cartItemsContainer.querySelectorAll('button').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          const idx = e.currentTarget.getAttribute('data-index');
+          cart.splice(idx, 1);
+          updateCartUI();
+        });
+      });
+    }
+
+    // Add to cart buttons (existing perfumes)
+    document.querySelectorAll('.add-to-cart-btn').forEach(button => {
+      button.addEventListener('click', (e) => {
+        e.preventDefault();
+        const article = e.currentTarget.closest('article');
+        if (!article) return;
+        const name = article.dataset.name || article.querySelector('h3, h4, h5').textContent.trim();
+        const price = Number(article.dataset.price) || 0;
+        const img = article.querySelector('img')?.src || 'https://placehold.co/80x80/6b4c8b/ffffff?text=Produto';
+        cart.push({ name, price, image: img });
+        updateCartUI();
+        openCart();
+      });
+    });
+
+    // Newsletter form submission
+    const newsletterForm = document.getElementById('newsletter-form');
+    newsletterForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const emailInput = newsletterForm.querySelector('input[name="email"]');
+      if (emailInput.value.trim() === '') return;
+      alert(`Obrigado por assinar a newsletter, ${emailInput.value.trim()}!`);
+      emailInput.value = '';
+    });
+
+    // Accessibility: close mobile menu on link click
+    mobileMenu.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        mobileMenu.classList.add('hidden');
+      });
+    });
+
+    // Filter and search logic
+    const filterCheckboxes = document.querySelectorAll('.filter-checkbox');
+    const filterRadios = document.querySelectorAll('.filter-radio');
+    const searchInput = document.getElementById('search-input');
+    const resetFiltersBtn = document.getElementById('reset-filters');
+    const productsList = document.getElementById('products-list');
+
+    function filterProducts() {
+      const selectedOlfativas = Array.from(filterCheckboxes).filter(c => c.checked).map(c => c.value);
+      const selectedPreco = Array.from(filterRadios).find(r => r.checked)?.value || 'all';
+      const selectedPopularidade = Array.from(filterRadios).find(r => r.checked)?.value || 'all';
+      const searchTerm = searchInput.value.trim().toLowerCase();
+
+      const products = productsList.querySelectorAll('article');
+
+      products.forEach(product => {
+        const name = product.dataset.name.toLowerCase();
+        const price = Number(product.dataset.price);
+        const olfativa = product.dataset.olfativa;
+        const popularidade = product.dataset.popularidade;
+
+        // Search filter
+        const matchesSearch = name.includes(searchTerm);
+
+        // Olfativa filter
+        const matchesOlfativa = selectedOlfativas.length === 0 || selectedOlfativas.includes(olfativa);
+
+        // Popularidade filter
+        const matchesPopularidade = selectedPopularidade === 'all' || popularidade === selectedPopularidade;
+
+        // Preço filter
+        let matchesPreco = true;
+        if (selectedPreco !== 'all') {
+          if (selectedPreco === '0-150') matchesPreco = price <= 150;
+          else if (selectedPreco === '151-300') matchesPreco = price >= 151 && price <= 300;
+          else if (selectedPreco === '301-600') matchesPreco = price >= 301 && price <= 600;
+          else if (selectedPreco === '601+') matchesPreco = price >= 601;
         }
-      h1,h2, h3, h4, h5, h6, .cinzel{
-        font-family:'Cinzel Decorative', serif;
-        color:#6b4b8a;
+
+        if (matchesSearch && matchesOlfativa && matchesPreco && matchesPopularidade) {
+          product.classList.remove('hidden');
+        } else {
+          product.classList.add('hidden');
+        }
+      });
+    }
+
+    filterCheckboxes.forEach(c => c.addEventListener('change', filterProducts));
+    filterRadios.forEach(r => r.addEventListener('change', filterProducts));
+    searchInput.addEventListener('input', filterProducts);
+    resetFiltersBtn.addEventListener('click', () => {
+      filterCheckboxes.forEach(c => c.checked = false);
+      filterRadios.forEach(r => r.checked = false);
+      document.querySelector('input.filter-radio[value="all"]').checked = true;
+      searchInput.value = '';
+      filterProducts();
+    });
+
+    // Faça seu Perfume Flow Logic (merged from previous)
+    const fragranceCheckboxes = document.querySelectorAll('.fragrance-checkbox');
+    const toStep2Btn = document.getElementById('to-step-2-flow');
+    const step1Section = document.getElementById('step-1-flow');
+    const step2Section = document.getElementById('step-2-flow');
+    const step3Section = document.getElementById('step-3-flow');
+    const toStep3Btn = document.getElementById('to-step-3-flow');
+    const finalizeBtn = document.getElementById('finalize-customization-flow');
+
+    let selectedFragrances = [];
+    let selectedFrasco = null;
+    let selectedKit = { name: "Perfume Individual", price: 0, image: '' };
+
+    // Total price display fixed on screen corner
+    let totalPriceDisplay = document.querySelector('.fixed.top-24.right-6');
+    if (!totalPriceDisplay) {
+      totalPriceDisplay = document.createElement('div');
+      totalPriceDisplay.setAttribute('aria-live', 'polite');
+      totalPriceDisplay.className = 'fixed top-24 right-6 bg-purple-700 text-white font-semibold py-3 px-6 rounded shadow-lg z-50 select-none text-lg';
+      totalPriceDisplay.textContent = 'Total: R$ 0,00';
+      document.body.appendChild(totalPriceDisplay);
+    }
+
+    function updateTotalPrice() {
+      let total = 0;
+      selectedFragrances.forEach(f => total += f.price);
+      if (selectedFrasco) total += selectedFrasco.price;
+      if (selectedKit) total += selectedKit.price || 0;
+      totalPriceDisplay.textContent = `Total: ${formatPriceBRL(total)}`;
+    }
+
+    // Limit max 4 fragrances
+    fragranceCheckboxes.forEach(chk => {
+      chk.addEventListener('change', () => {
+        const checked = Array.from(fragranceCheckboxes).filter(c => c.checked);
+        if (checked.length > 4) {
+          chk.checked = false;
+          return;
+        }
+        selectedFragrances = checked.map(c => ({ name: c.value, price: Number(c.dataset.price), image: 'https://placehold.co/80x80/6b4c8b/ffffff?text=' + encodeURIComponent(c.value) }));
+        toStep2Btn.disabled = selectedFragrances.length === 0;
+        updateTotalPrice();
+      });
+    });
+
+    // Step 2 frasco selection
+    const frascoRadios = document.querySelectorAll('.frasco-radio');
+    frascoRadios.forEach(radio => {
+      radio.addEventListener('change', () => {
+        const selected = Array.from(frascoRadios).find(r => r.checked);
+        if (selected) {
+          selectedFrasco = { name: selected.value, price: Number(selected.dataset.price), image: 'https://placehold.co/80x80/6b4c8b/ffffff?text=' + encodeURIComponent(selected.value) };
+          toStep3Btn.disabled = false;
+        } else {
+          selectedFrasco = null;
+          toStep3Btn.disabled = true;
+        }
+        updateTotalPrice();
+      });
+    });
+
+    // Step 3 kit selection
+    const kitRadios = document.querySelectorAll('.kit-radio');
+    kitRadios.forEach(radio => {
+      radio.addEventListener('change', () => {
+        const selected = Array.from(kitRadios).find(r => r.checked);
+        if (selected) {
+          selectedKit = { name: selected.value, price: Number(selected.dataset.price), image: 'https://placehold.co/80x80/6b4c8b/ffffff?text=' + encodeURIComponent(selected.value) };
+        } else {
+          selectedKit = { name: "Perfume Individual", price: 0, image: '' };
+        }
+        updateTotalPrice();
+      });
+    });
+
+    // Navigation buttons
+    toStep2Btn.addEventListener('click', () => {
+      step1Section.classList.add('hidden');
+      step2Section.classList.remove('hidden');
+      window.scrollTo({ top: step2Section.offsetTop - 80, behavior: 'smooth' });
+    });
+    toStep3Btn.addEventListener('click', () => {
+      step2Section.classList.add('hidden');
+      step3Section.classList.remove('hidden');
+      window.scrollTo({ top: step3Section.offsetTop - 80, behavior: 'smooth' });
+    });
+
+    // Finalize customization - add all items to cart and open cart
+    finalizeBtn.addEventListener('click', () => {
+      // Add fragrances
+      selectedFragrances.forEach(f => {
+        cart.push({ name: f.name, price: f.price, image: f.image });
+      });
+      // Add frasco
+      if (selectedFrasco) {
+        cart.push({ name: selectedFrasco.name, price: selectedFrasco.price, image: selectedFrasco.image });
       }
-      /*Scrollbar for cart slide*/
-      ::webkit-scrollbar{
-        width:8px
+      // Add kit
+      if (selectedKit && selectedKit.price > 0) {
+        cart.push({ name: selectedKit.name, price: selectedKit.price, image: selectedKit.image });
       }
-      ::webkit-scrollbar-track{
-      background:#f3f3f3;
+      updateCartUI();
+      openCart();
+      // Reset flow
+      step3Section.classList.add('hidden');
+      step1Section.classList.remove('hidden');
+      toStep2Btn.disabled = true;
+      toStep3Btn.disabled = true;
+      finalizeBtn.disabled = false;
+      selectedFragrances = [];
+      selectedFrasco = null;
+      selectedKit = { name: "Perfume Individual", price: 0, image: '' };
+      fragranceCheckboxes.forEach(c => c.checked = false);
+      frascoRadios.forEach(r => r.checked = false);
+      kitRadios.forEach(r => r.checked = false);
+      // Reset kit radio to Perfume Individual
+      document.querySelector('input.kit-radio[value="Perfume Individual"]').checked = true;
+      updateTotalPrice();
+      alert('Personalização adicionada ao carrinho!');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    // Frete calculation simulation
+    const cepInput = document.getElementById('cep-input');
+    const freteInfo = document.getElementById('frete-info');
+    cepInput.addEventListener('input', () => {
+      const cep = cepInput.value.trim();
+      if (cep.length === 8 && /^\d{8}$/.test(cep)) {
+        // Simulate frete calculation
+        const frete = 20 + Math.floor(Math.random() * 30); // R$20 to R$50 random
+        freteInfo.textContent = `Frete estimado para CEP ${cep}: R$ ${frete},00`;
+        // Update cart total with frete
+        let total = 0;
+        cart.forEach(item => total += item.price);
+        totalPriceDisplay.textContent = `Total: ${formatPriceBRL(total + frete)}`;
+      } else {
+        freteInfo.textContent = 'Informe seu CEP para calcular o frete.';
+        updateTotalPrice();
       }
-      ::webkit-scrollbar-thumb{
-      backgound-color
+    });
+
+    // Coupon code logic
+    const couponInput = document.getElementById('coupon-input');
+    const applyCouponBtn = document.getElementById('apply-coupon');
+    const couponSuccess = document.getElementById('coupon-success');
+    const couponError = document.getElementById('coupon-error');
+
+    let couponApplied = false;
+    let discountPercent = 0;
+
+    applyCouponBtn.addEventListener('click', () => {
+      const code = couponInput.value.trim().toUpperCase();
+      let total = 0;
+      cart.forEach(item => total += item.price);
+      if (couponApplied) {
+        couponError.textContent = 'Cupom já aplicado.';
+        couponError.classList.remove('hidden');
+        couponSuccess.classList.add('hidden');
+        return;
+      }
+      if (code === 'GIVARA20' && total >= 300) {
+        discountPercent = 20;
+        couponApplied = true;
+        couponSuccess.textContent = 'Cupom GIVARA20 aplicado: 20% de desconto!';
+        couponSuccess.classList.remove('hidden');
+        couponError.classList.add('hidden');
+      } else if (code === 'GIVARA30' && total >= 300) {
+        discountPercent = 30;
+        couponApplied = true;
+        couponSuccess.textContent = 'Cupom GIVARA30 aplicado: 30% de desconto!';
+        couponSuccess.classList.remove('hidden');
+        couponError.classList.add('hidden');
+      } else {
+        couponError.textContent = 'Cupom inválido ou não aplicável.';
+        couponError.classList.remove('hidden');
+        couponSuccess.classList.add('hidden');
+        discountPercent = 0;
+        couponApplied = false;
+      }
+      if (couponApplied) {
+        const discountedTotal = total * (1 - discountPercent / 100);
+        cartTotal.textContent = formatPriceBRL(discountedTotal);
+        totalPriceDisplay.textContent = `Total: ${formatPriceBRL(discountedTotal)}`;
+      } else {
+        cartTotal.textContent = formatPriceBRL(total);
+        updateTotalPrice();
+      }
+    });
+  </script>
+ </body>
+</html>
+
